@@ -21,53 +21,47 @@ body {
   gap: $gap;
   width: calc(7 * $cell-size + 6 * $gap + 2 * $pad);
   padding: $pad;
+  &__day {
+    box-sizing: border-box;
+    width: $cell-size;
+    height: $cell-size;
+    border: $border;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #eee;
 
+    transition:
+      transform 0.5s,
+      background-color 0.5s;
 
-&__day {
-  box-sizing: border-box;
-  width: $cell-size;
-  height: $cell-size;
-  border: $border;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: #eee;
-
-  transition:
-    transform 0.5s,
-    background-color 0.5s;
-
-  &:hover {
-    cursor: pointer;
-    background-color: #ffbfcb;
-    transform: translateY(-20px);
-    z-index: 1;
-  }
-}
-
-@for $i from 1 through 31 {
-  &__day:nth-child(#{$i}) {
-    &::before {
-      content: '#{$i}';
-
-      font-family: Arial, sans-serif;
-      font-size: 30px;
+    &:hover {
+      cursor: pointer;
+      background-color: #ffbfcb;
+      transform: translateY(-20px);
+      z-index: 1;
     }
   }
-}
 
-@each $name, $offset in (sun 0, mon 1, tue 2, wed 3, thu 4, fri 5, sat 6) {
-  &--start-day-#{$name}
-  &__day:nth-child(1) {
-    margin-left: $offset * ($cell-size + $gap);
-
+  @for $i from 1 through 31 {
+    &__day:nth-child(#{$i}) {
+      &::before {
+        content: '#{$i}';
+        font-family: Arial, sans-serif;
+        font-size: 30px;
+      }
+    }
   }
-}
 
-@for $d from 28 through 31 {
-  &--month-length-#{$d}
-  &__day:nth-child(n + #{ $d + 1 }) {
-    display: none;
+  @each $name, $offset in (mon 0, tue 1, wed 2, thu 3, fri 4, sat 5, sun 6) {
+    &--start-day-#{$name} &__day:nth-child(1) {
+      margin-left: $offset * ($cell-size + $gap);
+    }
   }
-}
+
+  @for $d from 28 through 31 {
+    &--month-length-#{$d} &__day:nth-child(n + #{ $d + 1 }) {
+      display: none;
+    }
+  }
 }
